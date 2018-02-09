@@ -55,3 +55,22 @@ legend("topleft",
           cex=0.8,
           bty="n",
           fill=colours )
+
+#function to get t-tests
+by_sector.t <- function(y){
+
+   t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
+}
+by_sector.t(6)
+by_sector.t(8)
+
+#march april may 2010/2017
+
+by.month.t <- function(x){
+  
+  t.test(as.numeric(ap10[,x]),as.numeric(ap17[,x]), paired = TRUE)
+  
+}
+
+
+
