@@ -11,7 +11,7 @@ library(shiny)
 
 # import and transpose dataset
 library(readr)
-bp10 <- read_csv("BP Apprehensions 2010.csv", col_types = cols(Sector = col_skip()))
+bp10 <- read_csv("BP Apprehensions 2010.csv")[,2:13]
 bp10 <- t(bp10)
 sectors <- read_csv("BP Apprehensions 2010.csv")[,1]
 sectors <- t(sectors)
