@@ -1,3 +1,8 @@
+# app_BP2010.R
+# Description: To illustrate monthly 2017 BP Apprehensions data 
+# by sector
+# Author: Yue Wu, emmawu@bu.edu
+# 02/09/2018
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
@@ -9,10 +14,12 @@
 
 library(shiny)
 
-# import and transpose dataset
+# import without sector names
 library(readr)
 bp10 <- read_csv("BP Apprehensions 2010.csv")[,2:13]
+# transpose dataset to make sectors columns
 bp10 <- t(bp10)
+# import sector names and make it colnames
 sectors <- read_csv("BP Apprehensions 2010.csv")[,1]
 sectors <- t(sectors)
 colnames(bp10) <- sectors
@@ -40,14 +47,12 @@ ui <- fluidPage(
    )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw a barplot
 server <- function(input, output) {
-  # selectedData <- reactive({
-  #   bp10[,bp10$Sector==input$sector]
-  # })
+  
    output$distPlot <- renderPlot({
 
-     # draw the bar plot with the specified sector
+     # draw the 2010 bar plot with the specified sector
      barplot(bp10[,input$sector]*1, 
              main=input$sector,
              ylab="Number of People",
