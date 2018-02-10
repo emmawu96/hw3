@@ -60,7 +60,7 @@ ui <- fluidPage(
                   hr()),
       
       # Include clarifying text ----
-      helpText("Note: "),
+      helpText("Note: Click update button after choosing"),
       
       # Input: actionButton() to defer the rendering of output ----
       # until the user explicitly clicks the button (rather than
@@ -114,9 +114,9 @@ server <- function(input, output) {
     # draw the chosen year bar plot with the specified sector
     dataset <- datasetInput()
     barplot(dataset[,input$sector], 
-            main=input$sector,
-            ylab="Number of People",
-            xlab="Month")
+            main="Apprehensions by Month",
+            las=2,
+            ylab="Number of People")
   })
   
 }
