@@ -27,5 +27,8 @@ L <- fore$pred - 2*fore$se
 ts.plot(ts3, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2))
 legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=c(1,2,4), lty=c(1,1,2))
 
-
+# Decompostion of additive time series
+timeseriescomponents <- decompose(ts3)
+#timeseriescomponents
+plot(timeseriescomponents)
 
