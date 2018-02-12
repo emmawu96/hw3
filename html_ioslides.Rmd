@@ -192,10 +192,8 @@ ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 ```
 
 ```{r }
-
 # monthly time series graph from 2000 t0 2017 
 ts4 <-ts.plot(ts3, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
-
 ```
 
 
