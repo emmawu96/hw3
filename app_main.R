@@ -42,7 +42,7 @@ bp17[,1:9]
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("More Widgets"),
+  titlePanel("BP Apprehensions"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
