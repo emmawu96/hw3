@@ -2,7 +2,7 @@
 title: "MA 415/ MA615 
         HW 3 Section 1 project"
 output: ioslides_presentation
-fontsize: 12pt
+fontsize: 10pt
 ---
 
 ```{r setup, include=FALSE}
@@ -24,17 +24,89 @@ knitr::opts_chunk$set(echo = FALSE)
 - Conclusion
 
 ## Introduction
+
+Apprehensions at the US-Mexico border have declined to near-historic lows over the last few years. The objective of this report is to give a deeper insight on this change that is been occuring. Through the analysis of the data collected by the U.S. Customs and Border Protection through the years, we intend to shed light on the general trend's behaviour of this phenomenon, focusing on how factors such as time and place have influenced the given outcome.
+
+## Summary of 2010 Apprehensions
 ```{r}
+PB2010 <- read.csv("PB2010.csv")
+plot(PB2010$Month, PB2010$Apprehensions, col = PB2010$Sector)
 
+# install.packages("tidyverse")
+# library(tidyverse)
+# 
+# ggplot(data = PB2010) + 
+#   geom_point(mapping = aes(x = Month, y = Apprehensions , color = Sector))
 ```
 
-## Summary of the data set
+## Summary of 2017 Apprehensions
+```{r}
+PB2017 <- read.csv("PB2017.csv")
+plot(PB2017$Month, PB2017$Apprehensions, col = PB2017$Sector)
 
-## Simple statistic tests
-```{r echo=TRUE}
-
+# install.packages("tidyverse")
+# library(tidyverse)
+# 
+# ggplot(data = PB2017) + 
+#   geom_point(mapping = aes(x = Month, y = Apprehensions , color = Sector))
 ```
 
+## Statistic number of 2010 by month 
+mean 
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Month, mean)
+```
+median  
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Month, median)
+```
+variance 
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Month, var)
+```
+
+
+## Statistic number of 2017 by month 
+mean 
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Month, mean)
+```
+median  
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Month, median)
+```
+variance 
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Month, var)
+```
+
+## Statistic number of 2010 by sector 
+mean 
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Sector, mean)
+```
+median 
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Sector, median)
+```
+variance
+```{r}
+tapply(PB2010$Apprehensions, PB2010$Sector, var)
+```
+
+## Statistic number of 2017 by sector 
+mean 
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Sector, mean)
+```
+median 
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Sector, median)
+```
+variance
+```{r}
+tapply(PB2017$Apprehensions, PB2017$Sector, var)
+```
 
 ## Data visualization  
 ```{r include=FALSE}
@@ -163,4 +235,5 @@ legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=
 ```
 
 ## Conclusion
+
 
