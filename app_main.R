@@ -15,7 +15,7 @@
 library(shiny)
 
 # import 2017 data without sector names
-# library(readr)
+library(readr)
 bp17 <- read_csv("PB Apprehensions 2017.csv")[1:10,2:13]
 # transpose dataset to make sectors columns
 bp17 <- t(bp17)
