@@ -1,7 +1,8 @@
 \documentclass[journal, a4paper]{IEEEtran}
 \usepackage{cite}  
 \usepackage{graphicx}
-
+\usepackage{listings}
+\usepackage{inconsolata}
 \usepackage{subfigure}
 \usepackage{url}       
 \usepackage{stfloats} 
@@ -51,7 +52,7 @@ colours <- c("orange","red")
 	Apprehensions at the US-Mexico border have declined to near-historic lows over the last few years.
 	The objective of this report is to give a deeper insight on this change that has been occuring.
 	Through the analysis of the data collected by the U.S. Customs and Border Protection through the years,
-	we intend to shed light on the general trend's behaviour of this phenomenon, focusing on how factors such as time and place have influenced the given outcome.
+	we intend to shed light on the general trend of this phenomenon, focusing on how factors such as time and place have influenced the given outcome.
 	
 	
 	
@@ -120,8 +121,8 @@ legend("topright",
 
 
 
-	Taking into consideration the months and the sectors where the apprehensions respectively in 2010 and 2017 occurred, we can see that the change has been characterized by a major drop in certain months and certain places rather then by a constant decline everywhere. By looking at Fig.1, it's easy to see that the most trafficated months in 2010, such as April, May and July are also the ones that have witnessed the greatest decline, figuring the lowest numbers in the data collected in 2017. Similarly, visualizing the data by sector, the greatest change has occured in Tuscon, the area with the greatest number of apprehensions in the 2010 that observed a drop of over the 80 percent according to the data collected in 2017. 
-Adding to the graphs some statistical analysis, 
+	Taking into consideration the months and the sectors where the apprehensions respectively in 2010 and 2017 occurred, we can see that the change has been characterized by a major drop in certain months and certain places rather then by a constant decline everywhere. By looking at Fig.1, it's easy to see that the most trafficated months in 2010, such as April, May and June are also the ones that have witnessed the greatest decline, figuring the lowest numbers in the data collected in 2017. Similarly, visualizing the data by sector, the greatest change has occured in Tuscon, the area with the highest number of apprehensions in the 2010, that observed a drop of over the 80 percent according to the data collected in 2017. 
+
 
 
 <<label=fig2,fig=TRUE, echo=FALSE, include=FALSE>>=
@@ -150,6 +151,41 @@ legend("topleft",
 
 \end{center}
 \end{figure} 
+
+It's interesting to see how some sectors, such as El Paso, Grand Valley and Yuma, have witnessed an increasing in apprehensions. However this rise is quite uninfluencial when compared with the steep decline had in the sector Tucson. 
+The test belows substantiates what just said. 
+
+\begin{enumerate}
+
+\item T-test on Tucson observations.
+
+
+\subitem $ H_{o} $ = mean of the difference between 2010 and 2017.
+
+\subitem 95 percent interval = $ (9363.28,  19560.89) $
+
+\subitem mean of the difference = 14462.08 
+
+\subitem p value = $ 6.324e-05 $
+
+\item T-test on Grande Valley observations.
+
+\subitem $ H_{o} $ = mean of the difference between 2010 and 2017.
+
+\subitem 95 percent interval = $ (-11201.5621,  572.5621) $
+
+\subitem mean of the difference = $ -5314.5 $
+
+\subitem p value = $ 0.07241 $
+
+\end{enumerate}
+
+
+
+
+This pattern, that showed a great change in the once most trafficated months and sectors, is substantiated by the fact
+that all those months and sectors who had an average number of apprehensions in the 2010, have been
+
 
 
 
@@ -201,6 +237,10 @@ legend("topleft",
 			\label{fig:tf_plot}
 		\end{center}
 	\end{figure}
+	
+	
+
+	
 	
 	\section{Filling this page}
 	Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una, pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones. Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem.
