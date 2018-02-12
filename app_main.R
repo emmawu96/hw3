@@ -11,7 +11,7 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+library(readr)
 library(shiny)
 
 # import 2017 data without sector names
