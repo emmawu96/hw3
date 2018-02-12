@@ -1,0 +1,233 @@
+---
+title: "US Border Patrol Apprehensions"
+author: "Yin Huang, Francesco Re, Emma Yue Wu"
+date: "2/11/2018"
+subtitle: "MA415 Spring 2018, Assignment 3"
+runtime: shiny
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+
+#Set up for shiny
+# import 2017 data without sector names
+library(readr)
+bp17 <- read_csv("PB Apprehensions 2017.csv")[1:10,2:13]
+# transpose dataset to make sectors columns
+bp17 <- t(bp17)
+# import sector names and make it colnames
+sectors <- read_csv("PB Apprehensions 2017.csv")[,1]
+sectors <- t(sectors)
+colnames(bp17) <- sectors
+
+# import 2010 data without sector names
+bp10 <- read_csv("BP Apprehensions 2010.csv")[1:10,2:13]
+# transpose dataset to make sectors columns
+bp10 <- t(bp10)
+# import sector names and make it colnames
+colnames(bp10) <- sectors
+#take out any unnecessary content
+as.data.frame(bp10)
+bp10[,1:9]
+as.data.frame(bp17)
+bp17[,1:9]
+app17 <- t(bp17)
+app10 <- t(bp10)
+
+
+#Set up for the rest of the document
+#monthly apprehensions by year
+msum  <- read.csv("PB monthly summaries.csv", stringsAsFactors = FALSE)
+years <- msum[c(1)]
+msum  <- msum[-c(1)]
+rownames(msum) <- as.vector(t(years))
+#msum
+#monthly apprehensions by Sector
+ap10 <- read.csv("BP apprehensions 2010.csv")
+cities <- ap10[,1]
+ap10 <- ap10[-c(1,14)]
+rownames(ap10) <- cities
+#ap10
+SumCol10 <- colSums(Filter(is.numeric, ap10))
+SC10 <- colSums(app10,na.rm=TRUE)
+#monthly apprehensions by Sector
+ap17 <- read.csv("edited_app17.csv")
+ap17 <- ap17[-c(1,2,15)]
+ap17 <- ap17[-c(10),]
+rownames(ap17) <- cities
+SumCol17 <- colSums(Filter(is.numeric, ap17))
+SC17 <- colSums(app17,na.rm=TRUE)
+#ap17
+
+
+```
+
+##Introduction
+
+Apprehensions at the US-Mexico border have declined to near-historic lows over the last few years. The objective of this report is to give a deeper insight on this change that is been occuring. Through the analysis of the data collected by the U.S. Customs and Border Protection through the years, we intend to shed light on the general trend's behaviour of this phenomenon, focusing on how factors such as time and place have influenced the given outcome.
+
+## Data Overview
+
+Choose a year and sector to view the data.
+
+```{r tabsets, echo=FALSE}
+
+shinyApp(
+# Define UI for dataset viewer app ----
+ui <- fluidPage(
+  
+  # # App title ----
+  # titlePanel("BP Apprehensions"),
+  
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Select a dataset ----
+      selectInput("dataset", "Choose a year:",
+                  choices = c("2010", "2017")),
+      # Input: Select a sector ----
+      selectInput("sector",
+                  "Sector:",
+                  choices= colnames(bp17),
+                  hr()),
+      
+      # Include clarifying text ----
+      helpText("Note: Click update button after choosing"),
+      
+      # Input: actionButton() to defer the rendering of output ----
+      # until the user explicitly clicks the button (rather than
+      # doing it immediately when inputs change). This is useful if
+      # the computations required to render output are inordinately
+      # time-consuming.
+      actionButton("update", "Update View")
+      
+    ),
+    
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: Header + summary of distribution ----
+      h4("Summary"),
+      verbatimTextOutput("summary"),
+      
+      # Output: Header + table of distribution ----
+      h4("Bar Plot"),
+      plotOutput("distPlot")
+    )
+    
+  )
+),
+
+# Define server logic to summarize and view selected dataset ----
+server <- function(input, output) {
+  
+  # Return the requested dataset ----
+  # Note that we use eventReactive() here, which depends on
+  # input$update (the action button), so that the output is only
+  # updated when the user clicks the button
+  datasetInput <- eventReactive(input$update, {
+    switch(input$dataset,
+           "2010" = bp10,
+           "2017" = bp17)
+  }, ignoreNULL = FALSE)
+  
+  # Generate a summary of the dataset ----
+  output$summary <- renderPrint({
+    dataset <- datasetInput()
+    summary(dataset[,input$sector])
+  })
+  
+  # Show the first "n" observations ----
+  # The use of isolate() is necessary because we don't want the table
+  # to update whenever input$obs changes (only when the user clicks
+  # the action button)
+  output$distPlot <- renderPlot({
+    
+    # draw the chosen year bar plot with the specified sector
+    dataset <- datasetInput()
+    barplot(dataset[,input$sector], 
+            main=paste(input$sector, "Apprehensions in", input$dataset),
+            las=2,
+            ylab="Number of People")
+   })
+  
+  },
+  options = list(height = 600)
+)
+```
+
+
+## Timeline and Projections
+```{r, echo=FALSE}
+#Comparison total apprehensions by month 
+CmbColS <- rbind((SC10),(SC17))
+colours <- c("orange","red")
+barplot(CmbColS,
+        beside=TRUE, 
+        las=2, 
+        main = "Apprehensions by month",
+        cex.lab =1.5,
+        col = colours )
+legend("topright",
+       c("Apprehensions in 2010","Apprehensions in 2017"),
+       cex=0.8,
+       bty="n",
+       fill=colours )
+
+#Time-series graph of monthly sum
+# read data
+ts1 <- read.csv("PB monthly summaries_no title.csv")
+# arrange the rows in ascending order with columns staring from Jan to Dec
+ts2 <- ts1[ nrow(ts1):1, ]
+ts2 <- cbind(subset.data.frame(ts2)[,4:12],subset.data.frame(ts2)[,1:3])
+# change ts2 to class "ts"
+ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
+# monthly time series graph from 2000 t0 2017 
+ts4 <-ts.plot(ts3, gpars=list(main="Timeline",xlab="year", ylab="Apprehensions", lty=c(1:3)))
+# Box plot across months will give us a sense on seasonal effect 
+boxplot(ts3~cycle(ts3), main="Distribution of Monthly Apprehensions",xlab="month", ylab="Apprehensions")
+#  forecast
+fit <- arima(ts3, order=c(1,0,0), list(order=c(2,1,0), period=12))
+fore <- predict(fit, n.ahead=24)
+#  error bounds at 95% confidence level
+U <- fore$pred + 2*fore$se
+L <- fore$pred - 2*fore$se
+ts.plot(ts3, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2), main="Projection", xlab="month", ylab="Apprehensions")
+legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=c(1,2,4), lty=c(1,1,2))
+# Decompostion of additive time series
+timeseriescomponents <- decompose(ts3)
+#timeseriescomponents
+plot(timeseriescomponents)
+
+```
+
+## Results and Interpretations
+```{r, echo=FALSE}
+#function to get t-tests
+by_sector.t <- function(y){
+
+   t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
+}
+by_sector.t(6)
+by_sector.t(8)
+
+#march april may 2010/2017
+
+by.month.t <- function(x){
+  
+  t.test(as.numeric(ap10[,x]),as.numeric(ap17[,x]), paired = TRUE)
+  
+}
+
+```
+
+
+
+
+
+

@@ -15,7 +15,7 @@ library(readr)
 library(shiny)
 
 # import 2017 data without sector names
-# library(readr)
+library(readr)
 bp17 <- read_csv("PB Apprehensions 2017.csv")[1:10,2:13]
 # transpose dataset to make sectors columns
 bp17 <- t(bp17)
@@ -42,7 +42,7 @@ bp17[,1:9]
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("More Widgets"),
+  titlePanel("PB Apprehensions"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
