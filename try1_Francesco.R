@@ -108,23 +108,31 @@ legend("topleft",
           bty="n",
           fill=colours )
 
-#function to get t-tests
+#function to get t-tests for by-sector compasison
 by_sector.t <- function(y){
 
    t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
 }
+# sector with max yearly sum in 2010 --> test on max-apprehension sector changes
 by_sector.t(6)
+# sector with max yearly sum in 2017 --> test on max-apprehension sector changes
 by_sector.t(8)
 
-t.test(as.numeric(ap10[8,]), as.numeric(ap17[8,]), paired = TRUE) # Tucson
+# t.test(as.numeric(ap10[8,]), as.numeric(ap17[8,]), paired = TRUE) # Tucson
 
-#march april may 2010/2017
+#function to get t-test for by-month comparison
+by.month.t <- function(a,b){
+  sum3m_10 = rowSums(ap10[,a:b],na.rm=FALSE) #sum of 3-months peak for each sector
+  sum3m_17 = rowSums(ap17[,a:b],na.rm=FALSE)
+  t.test(sum3m_10,sum3m_17, paired = TRUE)
 
-by.month.t <- function(x){
-  
-  t.test(as.numeric(ap10[,x]),as.numeric(ap17[,x]), paired = TRUE)
-  
 }
+# peak in 2010: March April May
+# test 2010 vs 2017 for March, April, May
+by.month.t(6,8)
+# peak in 2017: October, November, December
+# test 2010 vs 2017 for October, November, December
+by.month.t(1,3)
 
 #total numbers
 
