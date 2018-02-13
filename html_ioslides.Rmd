@@ -229,6 +229,13 @@ plot(timeseriescomponents)
 
 ```
 
+
+## Month plot
+This graph display the time series plot for each month from 2000 to 2017. The shape of each month is very similar with different magnitudes. We need to do further research to find the cause of two peaks and troughs during this 17 years. This may explain the factor affecting apprehensions.  
+```{r}
+monthplot(ts3, ylab= "Apprehensions" )
+```
+
 ## Time series prediction
 ```{r}
 fit <- arima(ts3, order=c(1,0,0), list(order=c(2,1,0), period=12))
@@ -245,4 +252,10 @@ legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=
 
 ## Conclusion
 
+## Reference
+<br> - https://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html#time-series-analysis
+<br> - http://www2.hawaii.edu/~fuleky/econ427/6_Time_series_decomposition.html#1
+<br> - https://rstudio-pubs-static.s3.amazonaws.com/254962_6d87741d9ad64a32b6e47d684875dde9.html
+<br> - https://www.datascience.com/blog/introduction-to-forecasting-with-arima-in-r-learn-data-science-tutorials
+<br> - http://www.washingtonexaminer.com/border-apprehensions-hit-17-year-low-in-march/article/2619338
 
