@@ -134,6 +134,24 @@ by.month.t(6,8)
 # test 2010 vs 2017 for October, November, December
 by.month.t(1,3)
 
+#WE SHOULD ASK THE PROFESSOR WHICH ONE IS BETTER
+#T-test based on the monthly sums
+
+#Testing the hyphotesis for which the three most trafficated months in 2010 are equal in mean to the 
+#same months in 2017
+x17 <- msum[1,]
+x10 <- msum[8,]
+x17 <- x17[6:8]
+x10 <- x10[6:8]
+t.test(as.numeric(x10), as.numeric(x17), paired = TRUE)
+
+#Testing the hyphotesis for which the three most trafficated months in 2017 are equal in mean to the 
+#same months in 2010
+x17 <- msum[1,]
+x10 <- msum[8,]
+x17 <- x17[2:4]
+x10 <- x10[2:4]
+t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 #total numbers
 
 sum(ap17)
