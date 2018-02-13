@@ -53,7 +53,8 @@ plot(PB2010$Month, PB2010$Apprehensions, col = PB2010$Sector)
 ```
 
 ## Overview of 2017 Apprehensions
-The pink dots are Sector "Rio Grande Valley" which contributed the most apprehensions in 2017. Notably,the number of apprehensions from Rio Grande Valley is unstable, especially it dramatically increased from October to December.
+The pink dots are Sector "Rio Grande Valley" which contributed the most apprehensions in 2017. Notably,the number of apprehensions from Rio Grande Valley is unstable, especially it dramatically increased from September to October.
+
 ```{r}
 #PB2017 <- read.csv("PB2017.csv")
 plot(PB2017$Month, PB2017$Apprehensions, col = PB2017$Sector)
@@ -127,7 +128,7 @@ PB17_statInfo_bySec
 
 ## 2010 v.s 2017 Apprehensions by month  
 The most 3 trafficated months in 2010, April, May and June, are also the ones that have witnessed the greatest decline, figuring the lowest numbers in the data collected in 2017.
-While apprehensions tend to decrease during the winter months, we can see an increase from January to February from 2010 to 2017.
+While apprehensions tend to decrease during the winter months, we can see an increase from January to March from 2010 to 2017.
 ```{r echo=FALSE}
 #ap10 <- read.csv("BP apprehensions 2010.csv")
 cities <- ap10[,1]
