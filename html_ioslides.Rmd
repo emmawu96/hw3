@@ -40,7 +40,7 @@ ap17 <- read.csv("edited_app17.csv")
 
 
 ## Over view of 2010 Apprehensions
-The gray dots are Sector "Tucson", which has the most unstable number of apprehensions. And it also contributed the most apprehensions in 2010. 
+The gray dots are Sector "Tucson", which had the most unstable number of apprehensions. And it also contributed the most apprehensions in 2010. 
 ```{r}
 #PB2010 <- read.csv("PB2010.csv")
 plot(PB2010$Month, PB2010$Apprehensions, col = PB2010$Sector)
@@ -53,7 +53,7 @@ plot(PB2010$Month, PB2010$Apprehensions, col = PB2010$Sector)
 ```
 
 ## Overview of 2017 Apprehensions
-The pink dots are Sector "Rio Grande Valley" which contributed the most apprehensions in 2017. Notably,the number of apprehensions from Rio Grande Valley is unstable, especially it dramatically increased from September to October.
+The pink dots are Sector "Rio Grande Valley" which contributed the most apprehensions in 2017. Notably,the number of apprehensions from Rio Grande Valley was unstable, especially it dramatically increased from September to October.
 
 ```{r}
 #PB2017 <- read.csv("PB2017.csv")
