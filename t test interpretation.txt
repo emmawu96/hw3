@@ -1,0 +1,22 @@
+# 2010 max-sum sector: No.8 Tuscon
+Null hypothesis: true mean of Tuscon’s apprehensions in 2010 is the same as in 2017 (alpha = 0.05)
+t test: p= 0.072 > 0.05
+Conclusion: We cannot reject the null hypothesis that Tuscon has equal means in 2017 from 2010.
+Interpretation: Tuscon does not play a critical role in the fluctuations of apprehensions between in 2010 and in 2017.
+
+# 2017 max-sum sector: No.6 Rio Grande Valley
+Null hypothesis: true mean of RGV’s apprehensions in 2010 is the same as in 2017 (alpha = 0.05)
+t test: p= 0.00 < 0.05
+Conclusion: We can reject the null hypothesis. RGV has significantly different means in 2010 from 2017, with 95% confidence. 
+Interpretation: RGV plays a critical role in the fluctuations of apprehensions between in 2010 and in 2017.
+
+# Testing the hyphotesis for which the three months with apprehension peak in one year are equal in mean of the same months in the other
+# Peak in 2010: March, April, May
+t test: p= 0.014 < 0.05
+Conclusion: We can reject the null hypothesis. March - May 2010 means are significantly different from those in 2017, with 95% confidence. 
+Interpretation: The peak in 2010 is significantly different in value from the same months in 2017. The test result correspond with the wide boxplot trend during those months. However, the small degrees of freedom makes the test less reliable. 
+
+# Peak in 2017: October, November, December
+t test: p= 0.081 > 0.05
+Conclusion: We cannot reject the null hypothesis. October - December 2017 means are not significantly different from those in 2010. 
+Interpretation: The peak in 2017 is not significantly different in value from the same months in 2010. The test result correspond with the narrow boxplot trend during those months. However, the small degrees of freedom makes the test less reliable. 

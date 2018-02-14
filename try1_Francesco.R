@@ -131,8 +131,10 @@ t.test(as.numeric(x10), as.numeric(x17), paired = TRUE)
 #same months in 2010
 x17 <- msum[1,]
 x10 <- msum[8,]
-x17 <- x17[2:4]
-x10 <- x10[2:4]
+# x17 <- x17[2:4]
+# x10 <- x10[2:4]
+x17 <- x17[1:3]
+x10 <- x10[1:3]
 t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 #total numbers
 
