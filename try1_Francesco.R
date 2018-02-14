@@ -118,24 +118,6 @@ by_sector.t(6)
 # sector with max yearly sum in 2017 --> test on max-apprehension sector changes
 by_sector.t(8)
 
-# t.test(as.numeric(ap10[8,]), as.numeric(ap17[8,]), paired = TRUE) # Tucson
-
-#function to get t-test for by-month comparison
-by.month.t <- function(a,b){
-  sum3m_10 = rowSums(ap10[,a:b],na.rm=FALSE) #sum of 3-months peak for each sector
-  sum3m_17 = rowSums(ap17[,a:b],na.rm=FALSE)
-  t.test(sum3m_10,sum3m_17, paired = TRUE)
-
-}
-# peak in 2010: March April May
-# test 2010 vs 2017 for March, April, May
-by.month.t(6,8)
-# peak in 2017: October, November, December
-# test 2010 vs 2017 for October, November, December
-by.month.t(1,3)
-
-#WE SHOULD ASK THE PROFESSOR WHICH ONE IS BETTER
-#T-test based on the monthly sums
 
 #Testing the hyphotesis for which the three most trafficated months in 2010 are equal in mean to the 
 #same months in 2017
@@ -149,8 +131,10 @@ t.test(as.numeric(x10), as.numeric(x17), paired = TRUE)
 #same months in 2010
 x17 <- msum[1,]
 x10 <- msum[8,]
-x17 <- x17[2:4]
-x10 <- x10[2:4]
+# x17 <- x17[2:4]
+# x10 <- x10[2:4]
+x17 <- x17[1:3]
+x10 <- x10[1:3]
 t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 #total numbers
 
