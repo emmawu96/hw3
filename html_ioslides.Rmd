@@ -36,6 +36,8 @@ PB2017 <- read.csv("PB2017.csv")
 ap10 <- read.csv("BP apprehensions 2010.csv")
 ap17 <- read.csv("edited_app17.csv")
 
+
+
 ```
 
 
@@ -142,6 +144,15 @@ SumCol17 <- colSums(Filter(is.numeric, ap17))
 CmbColS <- rbind((SumCol10),(SumCol17))
 CmbRowS <- rbind(rowSums(ap10), rowSums(ap17))
 colours <- c("orange","red")
+
+
+
+#monthly apprehensions by year
+msum  <- read.csv("PB monthly summaries.csv", stringsAsFactors = FALSE)
+years <- msum[c(1)]
+msum  <- msum[-c(1)]
+rownames(msum) <- as.vector(t(years))
+
 ```
 
 ```{r echo=FALSE}
@@ -178,21 +189,97 @@ legend("topleft",
 From 2010 to 2017, the U.S. Customs and Border Pro- tection saw an overall 36 percent decrease in individuals apprehended while trying to enter the country illegally.
 Taking into consideration the months and the sectors where the apprehensions respectively in 2010 and 2017 occurred, we can see that the change has been charac- terized by a major drop in certain months and certain places rather then by a constant decline everywhere.   
 
-## Simple Statistic Analysis
-1) T-test on Tucson observations.
-<br> - Ho = mean of the difference between 2010 and 2017.
-<br> - 95 percent interval = (9363.28, 19560.89) 
-<br> - mean of the difference = 14462.08
-<br> - p value = 6.324e − 05
+## Statistic Analysis(1)
+### Use simple statistical tests to compare the sector with the most apprehensions for 2010 and with the sector with the most apprehensions in 2017. Has there been a change in the maximum?
 
-2) T-test on Grande Valley observations.
-<br> - Ho = mean of the difference between 2010 and 2017.
-<br> - 95 percent interval = (−11201.5621, 572.5621) 
-<br> - mean of the difference = −5314.5
-<br> - p value = 0.07241
+---
+
+####**2010 max-sum sector: No.8 Tuscon**
+```{r echo=FALSE}
+#2010 monthly apprehensions by Sector
+ap10 <- read.csv("BP apprehensions 2010.csv")
+cities <- ap10[,1]
+ap10 <- ap10[-c(1,14)]
+rownames(ap10) <- cities
+SumCol10 <- colSums(Filter(is.numeric, ap10))
+
+#2017 monthly apprehensions by Sector
+ap17 <- read.csv("edited_app17.csv")
+
+ap17 <- ap17[-c(1,2,15)]
+ap17 <- ap17[-c(10),]
+rownames(ap17) <- cities
+SumCol17 <- colSums(Filter(is.numeric, ap17))
+
+#function to get t-tests for by-sector compasison
+by_sector.t <- function(y){
+
+   t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
+}
+# sector with max yearly sum in 2010 --> test on max-apprehension sector changes
+by_sector.t(6)
+```
+
+######**t test:** p= 0.072 > 0.05  
+
+######**Conclusion:** We cannot reject the null hypothesis that Tuscon has equal means in 2017 from 2010.  
+
+######**Interpretation:** Tuscon does not play a critical role in the fluctuations of apprehensions between in 2010 and in 2017.  
+
+---
+
+#### **2017 max-sum sector: No.6 Rio Grande Valley**
+```{r echo=FALSE}
+# sector with max yearly sum in 2017 --> test on max-apprehension sector changes
+by_sector.t(8)
+```
+######**t test:** p= 0.00 < 0.05  
+######**Conclusion:** We can reject the null hypothesis. RGV has significantly different means in 2010 from 2017, with 95% confidence.  
+######**Interpretation:** RGV plays a critical role in the fluctuations of apprehensions between in 2010 and in 2017.  
+
+
+## Statistic Analysis(2)
+### Testing the hyphotesis for which the three months with apprehension peak in one year are equal in mean of the same months in the other
+
+---
+
+##### **Peak in 2010: March, April, May**
+```{r, echo=FALSE}
+#Testing the hyphotesis for which the three most trafficated months in 2010 are equal in mean to the 
+#same months in 2017
+x17 <- msum[1,]
+x10 <- msum[8,]
+x17 <- x17[6:8]
+x10 <- x10[6:8]
+t.test(as.numeric(x10), as.numeric(x17), paired = TRUE)
+```
+######**t test:** p= 0.014 < 0.05  
+######**Conclusion:** We can reject the null hypothesis. March - May 2010 means are significantly different from those in 2017, with 95% confidence.  
+######**Interpretation:** The peak in 2010 is significantly different in value from the same months in 2017. The test result correspond with the wide boxplot trend during those months. However, the small degrees of freedom makes the test less reliable.   
+
+---
+
+####**Peak in 2017: October, November, December**
+```{r, echo=FALSE}
+#Testing the hyphotesis for which the three most trafficated months in 2017 are equal in mean to the 
+#same months in 2010
+x17 <- msum[1,]
+x10 <- msum[8,]
+# x17 <- x17[2:4]
+# x10 <- x10[2:4]
+x17 <- x17[1:3]
+x10 <- x10[1:3]
+t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
+```
+
+**t test:** p= 0.081 > 0.05  
+**Conclusion:** We cannot reject the null hypothesis. Oct - Dec 2017 means are not significantly different from those in 2010.  
+**Interpretation:** The peak in 2017 is not significantly different in value from the same months in 2010. The test result correspond with the narrow boxplot trend during those months. However, the small degrees of freedom makes the test less reliable. 
+
 
 ## Time series grapgh 
-The number apprehnsions dropped sharply in 2017. Homeland Security Sec,John Kelly, said it was a sign of decreased traffic of illegal immigrants. She also said that this trend indicates Trump's policies and executive actions on immigration are already causing some to stop before coming. 
+
+######*The number apprehnsions dropped sharply in 2017. It was a sign of decreased traffic of illegal immigrants. This trend indicates Trump's policies and executive actions on immigration are already causing some to stop before coming.*  
 ```{r include=FALSE}
 # read data
 ts1 <- read.csv("PB monthly summaries_no title.csv")
@@ -211,7 +298,7 @@ ts4 <-ts.plot(ts3, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
 ```
 
 ## Time series analysis
-Box plot across months will give us a sense on seasonal effect. We can see that the number of apprehension in March has the biggest range and highest median.
+Box plot across months gives us a sense on seasonal effect. We can see that the number of apprehension in March has the biggest range and highest median.
 
 ```{r echo=FALSE}
 # Box plot across months will give us a sense on seasonal effect 
@@ -219,8 +306,7 @@ boxplot(ts3~cycle(ts3))
 ```
 
 ## Time series analysis
-We can see there is an obvious seasonal fluctuation in the time series graph. A reasonable explanation is because of the weather. The apprehensions tend to decrease during the winter months. 
-But the decreasing trend implied that the administration's early efforts to thwart the illegal aliens problems have an effect in the long run. 
+There is an obvious seasonal fluctuation in the time series graph. A reasonable explanation is because of the weather. The apprehensions tend to decrease during the winter months. And the decreasing trend implied that the administration's early efforts to thwart the illegal aliens problems have an effect in the long run. 
 ```{r echo=FALSE}
 # Decompostion of additive time series
 timeseriescomponents <- decompose(ts3)
