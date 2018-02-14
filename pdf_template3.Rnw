@@ -13,11 +13,13 @@
 ap10 <- read.csv("BP apprehensions 2010.csv")
 cities <- ap10[,1]
 ap10 <- ap10[-c(1,14)]
+ap10 <- cbind(ap10[4:12],ap10[1:3])
 rownames(ap10) <- cities
 SumCol10 <- colSums(Filter(is.numeric, ap10))
 
 ap17 <- read.csv("edited_app17.csv")
 ap17 <- ap17[-c(1,2,15)]
+ap17 <- cbind(ap17[4:12],ap17[1:3])
 rownames(ap17) <- cities
 SumCol17 <- colSums(Filter(is.numeric, ap17))
 
@@ -136,25 +138,21 @@ legend("topright",
 		\end{center}
 	\end{table}
 	
-	
-For the following analysis, we used three data sets. Two regarding the apprehensions sorted by month and sector respectively in the year 2010 and 2017. A third displaying all the monthly apprehensions from 2000 till 2017.
-
-Focusing on the first two data sets mentioned, it's clear the presence of a strong dependence between sectors and months.In otherwords, different sectors in different months, have a different likelihood of possible observations, as the Chi-squared test, done on the two sets, shows below.
+On a first analysis, it's clear the presence of a strong dependence between sectors and months.In otherwords, different sectors in different months, have a different likelihood of possible observations, as the Chi-squared test, done on the two sets, shows below.
 
 
 \begin{enumerate}
 
 \item X-squared test on the 2010 apprehensions by months and sectors.
 
-\subitem X-squared = 9977.5 
+\subitem X-squared = 9977.5      p-value < 2.2e-16
 
-\subitem p-value < 2.2e-16
 
 \item X-squared test on the 2017 apprehensions by months and sectors.
 
-\subitem X-squared = 22656 
+\subitem X-squared = 22656       p-value < 2.2e-16
 
-\subitem p-value < 2.2e-16
+
 
 \end{enumerate}
 
@@ -176,8 +174,9 @@ legend("topleft",
 @
 
 
-In fact, we can see that the overall change has actually been characterized by a major drop in certain months and certain places rather than by a constant decline everywhere. By looking at Fig.1, it's easy to see that the most trafficated months in 2010, such as March, April and May are also the ones that have witnessed the greatest decline, figuring the lowest numbers in the data collected in 2017. Similarly, visualizing the data by sector, the greatest change has occured in Tuscon, the area with the highest number of apprehensions in the 2010, that observed a drop of over the 80 percent according to the data collected in 2017. 
+In fact, we can see that the overall change has actually been characterized by a major drop in certain months and certain places rather than by a constant decline everywhere. By looking at Fig.1, it's easy to see that the most trafficated months in 2010, such as March, April and May are also the ones that have witnessed the greatest decline, figuring the lowest numbers in the data collected in 2017. This decline had in the first months of 2017, lines up with the taking office of the Trump administration.Probably migrants were waiting in those months to see what would happen under Trump before attempting to enter the U.S. illegally.
 
+Similarly, visualizing the data by sector, the greatest change has occured in Tuscon, the area with the highest number of apprehensions in the 2010, that observed a drop of over the 80 percent according to the data collected in 2017. 
 
 
 
@@ -290,7 +289,7 @@ boxplot(ts3~cycle(ts3))
 \end{center}
 \end{figure} 
 
-Through Fig.4, we can see that from 2000, there's been a steady decrease in apprehensions, reaching its lows in 2015 and in  the first months of 2017. Overall, the apprehensions plummeted by approximately 80\%, from a high of over 1.6 million in 2000 to around 300,000 in 2017.A possible cause of this trend may lay on the administrative decisions taken over the years that may have deceived people from crossing the border illegaly.
+Through Fig.4, we can see that from 2000, there's been a steady decrease in apprehensions, reaching its lows in 2015 and in  the first months of 2017. Overall, the apprehensions plummeted by approximately 80\%, from a high of over 1.6 million in 2000 to around 300,000 in 2017.A possible cause of this trend may lay on the administrative decisions taken over the years that may have deceived people from crossing the border illegaly. 
 
 \begin{figure}[!hbt]
 \begin{center}
