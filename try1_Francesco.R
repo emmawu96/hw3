@@ -114,9 +114,9 @@ by_sector.t <- function(y){
    t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
 }
 # sector with max yearly sum in 2010 --> test on max-apprehension sector changes
-by_sector.t(6)
-# sector with max yearly sum in 2017 --> test on max-apprehension sector changes
 by_sector.t(8)
+# sector with max yearly sum in 2017 --> test on max-apprehension sector changes
+by_sector.t(6)
 
 
 #Testing the hyphotesis for which the three most trafficated months in 2010 are equal in mean to the 
@@ -131,10 +131,8 @@ t.test(as.numeric(x10), as.numeric(x17), paired = TRUE)
 #same months in 2010
 x17 <- msum[1,]
 x10 <- msum[8,]
-# x17 <- x17[2:4]
-# x10 <- x10[2:4]
-x17 <- x17[1:3]
-x10 <- x10[1:3]
+x17 <- x17[2:4]
+x10 <- x10[2:4]
 t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 #total numbers
 

@@ -234,7 +234,7 @@ by_sector.t <- function(y){
    t.test(as.numeric(ap10[y,]), as.numeric(ap17[y,]), paired = TRUE)
 }
 # sector with max yearly sum in 2010 --> test on max-apprehension sector changes
-by_sector.t(6)
+by_sector.t(8)
 ```
 t test: p= 0.072 > 0.05  
 Conclusion: We cannot reject the null hypothesis that Tuscon has equal means in 2017 from 2010.  
@@ -243,7 +243,7 @@ Interpretation: Tuscon does not play a critical role in the fluctuations of appr
 #### 2017 max-sum sector: No.6 Rio Grande Valley
 ```{r, echo=FALSE}
 # sector with max yearly sum in 2017 --> test on max-apprehension sector changes
-by_sector.t(8)
+by_sector.t(6)
 ```
 t test: p= 0.00 < 0.05  
 Conclusion: We can reject the null hypothesis. RGV has significantly different means in 2010 from 2017, with 95% confidence.  
@@ -270,13 +270,11 @@ Interpretation: The peak in 2010 is significantly different in value from the sa
 #same months in 2010
 x17 <- msum[1,]
 x10 <- msum[8,]
-# x17 <- x17[2:4]
-# x10 <- x10[2:4]
-x17 <- x17[1:3]
-x10 <- x10[1:3]
+x17 <- x17[2:4]
+x10 <- x10[2:4]
 t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 ```
-t test: p= 0.081 > 0.05  
+t test: p= 0.276 > 0.05  
 Conclusion: We cannot reject the null hypothesis. October - December 2017 means are not significantly different from those in 2010.  
 Interpretation: The peak in 2017 is not significantly different in value from the same months in 2010. The test result correspond with the narrow boxplot trend during those months. However, the small degrees of freedom makes the test less reliable. 
 
