@@ -8,9 +8,37 @@ ts1 <- read.csv("PB monthly summaries_no title.csv", header=FALSE)
 ts2 <- ts1[ nrow(ts1):1, ]
 ts2 <- cbind(subset.data.frame(ts2)[,4:12],subset.data.frame(ts2)[,1:3])
 ts2
-# change ts2 to class "ts"
+# change ts2 to class "ts" 
 ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
-ts4 <-ts.plot(ts3, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+
+## Create monthly mean data 
+ts3.1 <- as.vector(unlist(t(ts2)))
+for (i in 1:18){
+  if (i == 1){
+    from <- i
+    to <- 12
+    means <- c(mean(ts3.1[from :to]))
+  } 
+  else{
+    from <- 1 + to
+    to <- i*12
+  }
+  means <- append(means, (mean(ts3.1[from :to])))
+}
+
+means <- means[-1]
+means1 <- rep(means,each=12)
+means2 <- matrix(means1, nrow = 18, ncol = 12, byrow=TRUE) 
+dimnames(means2) <- list(
+  2000: 2017,
+  c("Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
+
+means.ts <- ts(as.vector(unlist(t(means2))),frequency=12,start=c(2000,1))
+
+## Plot the time Series Graph
+ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+lines(means.ts, lwd=3, lty=1, col = rgb( 0, .7, .9, .5) )
+text(seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.7, col = rgb(.9,  0, .7, .5) , font=2)
 
 # monthly time series graph from 2000 to 2017 
 # Box plot across months will give us a sense on seasonal effect 
