@@ -14,7 +14,7 @@ ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 #create data for calculating the annual means
 ts3.1<-as.vector(ts3)
 
-ts4 <- ts.plot(ts3, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+ts4 <- ts.plot(ts3, main="Time Series from 2010 to 2017", gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
 for (i in 1:18 ){
   if (i == 1){
     from <- i
@@ -36,8 +36,6 @@ text(0.5+seq(from = 2000, to = 2017, by = 1),annualMeans[1:18]+6000,labels=2000:
 ## add legend
 legend('topright', col=c(rgb(0,0,0),  rgb( 0, .7, .9, .5)), lty=1, lwd=2, 
        legend=c("Monthly apprehensions", "Annual averages"), bg='white')  
-
-
 
 
 # monthly time series graph from 2000 to 2017 

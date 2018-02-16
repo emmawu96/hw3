@@ -232,7 +232,7 @@ ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 
 ```{r echo=FALSE}
 #Plot the time Series Graph
-ts4 <- ts.plot(ts3, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+ts4 <- ts.plot(ts3,main="Time Series from 2010 to 2017", gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
 
 #create data for calculating the annual means and draw the means line
 ts3.1<-as.vector(ts3)
