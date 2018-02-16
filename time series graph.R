@@ -38,7 +38,9 @@ means.ts <- ts(as.vector(unlist(t(means2))),frequency=12,start=c(2000,1))
 ## Plot the time Series Graph
 ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
 lines(means.ts, lwd=3, lty=1, col = rgb( 0, .7, .9, .5) )
-text(seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.7, col = rgb(.9,  0, .7, .5) , font=2)
+legend('topright', col=c(rgb(0,0,0),  rgb( 0, .7, .9, .5)), lty=, lwd=2, 
+       legend=c("Monthly Apprehensions", "Monthly Average Apprehensions per Year"), bg='white')  
+text(0.5+seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.7, col = rgb(.9,  0, .7, .5) , font=2)
 
 # monthly time series graph from 2000 to 2017 
 # Box plot across months will give us a sense on seasonal effect 
