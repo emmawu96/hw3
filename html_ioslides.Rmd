@@ -39,13 +39,20 @@ PB2017 <- read.csv("PB2017.csv")
 The gray dots are Sector "Tucson", which had the most unstable number of apprehensions. And it also contributed the most apprehensions in 2010. 
 ```{r}
 #PB2010 <- read.csv("PB2010.csv")
-plot(PB2010$Month, PB2010$Apprehensions, col = PB2010$Sector)
 
-# install.packages("tidyverse")
-# library(tidyverse)
-# 
-# ggplot(data = PB2010) + 
-#   geom_point(mapping = aes(x = Month, y = Apprehensions , color = Sector))
+plot(PB2010$Month, PB2010$Apprehensions, type = "p",col = PB2010$Sector, main = "Apprehensions by month in 2010")
+legend("topright",inset=c(0.22,0),
+       c("Big Bend","Del Rio", "El Centro","El Paso","Laredo","Rio Grande Valley", "San Diego", "Tucson","Yuma"),
+       cex=0.8,
+       bty="n",
+       fill=c("gray0","red","green","blue","cyan", "magenta","yellow","gray", "black"))
+
+
+#  install.packages("tidyverse")
+#  library(tidyverse)
+# #
+#  ggplot(data = PB2010) + 
+#    geom_point(mapping = aes(x = Month, y = Apprehensions , color = Sector))
 ```
 
 ## Overview of 2017 Apprehensions
@@ -53,7 +60,13 @@ The pink dots are Sector "Rio Grande Valley" which contributed the most apprehen
 
 ```{r}
 #PB2017 <- read.csv("PB2017.csv")
-plot(PB2017$Month, PB2017$Apprehensions, col = PB2017$Sector)
+plot(PB2017$Month, PB2017$Apprehensions, col = PB2017$Sector, main = "Apprehensions by month in 2017")
+
+legend("topleft",inset=c(0.05,0),
+       c("Big Bend","Del Rio", "El Centro","El Paso","Laredo","Rio Grande Valley", "San Diego", "Tucson","Yuma"),
+       cex=0.8,
+       bty="n",
+       fill=c("gray0","red","green","blue","cyan", "magenta","yellow","gray", "black"))
 
 # install.packages("tidyverse")
 # library(tidyverse)
@@ -90,7 +103,7 @@ While apprehensions tend to decrease during the winter months, we can see an obv
 barplot(CmbColS,
         beside=TRUE, 
         las=2, 
-        #main = "Apprehensions by month",
+        main = "Apprehensions by month",
         cex.lab =1.5,
         col = colours )
 legend("topright",
@@ -106,7 +119,8 @@ The greatest change has occured in Tuscon, the area with the highest number of a
 CmbRowS <- rbind(rowSums(ap10), rowSums(ap17))
 barplot(CmbRowS,
         beside=TRUE, 
-        las=2, #main = "Apprehensions by sector", 
+        las=2, 
+        main = "Apprehensions by sector", 
         cex.lab =1.5, 
         col = colours )
 legend("topleft",
@@ -248,7 +262,7 @@ means.ts <- ts(as.vector(unlist(t(means2))),frequency=12,start=c(2000,1))
 
 ```{r echo=FALSE}
 ## Plot the time Series Graph (including two lines)
-ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)), main = "Time Series from 2010 to 2017")
 ## change the color
 lines(means.ts, lwd=2, lty=1, col = rgb( 0, .7, .9, .5) )
 ## add text labels
@@ -264,7 +278,7 @@ Box plot across months will give us a sense on seasonal effect. We can see that 
 
 ```{r echo=FALSE}
 # Box plot across months will give us a sense on seasonal effect 
-boxplot(ts3~cycle(ts3))
+boxplot(ts3~cycle(ts3),ylab= "Apprehensions", xlab= "Month", main="Monthly Box plot " )
 ```
 
 
@@ -281,9 +295,9 @@ plot(timeseriescomponents)
 
 
 ## Time series analysis (3)
-Month plot graph displays the time series plot for each month from 2000 to 2017. The shape of each month is very similar with different magnitudes. We need to do further research to find the cause of two peaks and troughs during this 17 years. This may explain the factor affecting apprehensions.  
+Monthly plot graph displays the time series plot for each month from 2000 to 2017. The horizontal lines indicate the means for each month. The shape of each month is very similar with different magnitudes.  
 ```{r}
-monthplot(ts3, ylab= "Apprehensions" )
+monthplot(ts3, ylab= "Apprehensions", xlab= "Month", main="Monthly plot with monthly mean")
 ```
 
 ## Time series prediction
