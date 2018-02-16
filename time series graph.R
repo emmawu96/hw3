@@ -11,7 +11,9 @@ ts2
 # change ts2 to class "ts" 
 ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 
-## Create monthly mean data 
+# Create monthly mean data for second time series line
+
+## calculate the annaul means 
 ts3.1 <- as.vector(unlist(t(ts2)))
 for (i in 1:18){
   if (i == 1){
@@ -26,21 +28,28 @@ for (i in 1:18){
   means <- append(means, (mean(ts3.1[from :to])))
 }
 
+## delete the duplicated means in 2010
 means <- means[-1]
+## repete the annual means 12 times for one year
 means1 <- rep(means,each=12)
+## make the data into matrix to add headers and row names
 means2 <- matrix(means1, nrow = 18, ncol = 12, byrow=TRUE) 
 dimnames(means2) <- list(
   2000: 2017,
   c("Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
-
+## change data type ti class ts
 means.ts <- ts(as.vector(unlist(t(means2))),frequency=12,start=c(2000,1))
 
-## Plot the time Series Graph
+
+## Plot the time Series Graph (including two lines)
 ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
-lines(means.ts, lwd=3, lty=1, col = rgb( 0, .7, .9, .5) )
-legend('topright', col=c(rgb(0,0,0),  rgb( 0, .7, .9, .5)), lty=, lwd=2, 
-       legend=c("Monthly Apprehensions", "Monthly Average Apprehensions per Year"), bg='white')  
-text(0.5+seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.7, col = rgb(.9,  0, .7, .5) , font=2)
+## change the color
+lines(means.ts, lwd=2, lty=1, col = rgb( 0, .7, .9, .5) )
+## add text labels
+text(0.5+seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.6, col = rgb(.9,  0, .7, .5) , font=2)
+## add legend
+legend('topright', col=c(rgb(0,0,0),  rgb( 0, .7, .9, .5)), lty=1, lwd=2, 
+       legend=c("Monthly apprehensions", "Annual averages"), bg='white')  
 
 # monthly time series graph from 2000 to 2017 
 # Box plot across months will give us a sense on seasonal effect 

@@ -207,17 +207,17 @@ t.test(as.numeric(x17), as.numeric(x10), paired = TRUE)
 ```{r include=FALSE}
 # read data
 ts1 <- read.csv("PB monthly summaries_no title.csv", header = FALSE)
-
 # arrange the rows in ascending order with columns staring from Jan to Dec
 ts2 <- ts1[ nrow(ts1):1, ]
 ts2 <- cbind(subset.data.frame(ts2)[,4:12],subset.data.frame(ts2)[,1:3])
-
 # change ts2 to class "ts"
 ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 ```
 
 ```{r include=FALSE}
-## Create monthly mean data 
+# Create monthly mean data for second time series line
+
+## calculate the annaul means 
 ts3.1 <- as.vector(unlist(t(ts2)))
 for (i in 1:18){
   if (i == 1){
@@ -232,22 +232,28 @@ for (i in 1:18){
   means <- append(means, (mean(ts3.1[from :to])))
 }
 
+## delete the duplicated means in 2010
 means <- means[-1]
+## repete the annual means 12 times for one year
 means1 <- rep(means,each=12)
+## make the data into matrix to add headers and row names
 means2 <- matrix(means1, nrow = 18, ncol = 12, byrow=TRUE) 
 dimnames(means2) <- list(
   2000: 2017,
   c("Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
-
+## change data type ti class ts
 means.ts <- ts(as.vector(unlist(t(means2))),frequency=12,start=c(2000,1))
 
 ```
 
 ```{r echo=FALSE}
-## Plot the time Series Graph
+## Plot the time Series Graph (including two lines)
 ts4 <- ts.plot(ts3,means.ts, gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+## change the color
 lines(means.ts, lwd=2, lty=1, col = rgb( 0, .7, .9, .5) )
+## add text labels
 text(0.5+seq(from = 2000, to = 2017, by = 1),means[1:18]+7000,labels=2000:2017, cex=0.6, col = rgb(.9,  0, .7, .5) , font=2)
+## add legend
 legend('topright', col=c(rgb(0,0,0),  rgb( 0, .7, .9, .5)), lty=1, lwd=2, 
        legend=c("Monthly apprehensions", "Annual averages"), bg='white')  
 
@@ -265,7 +271,7 @@ boxplot(ts3~cycle(ts3))
 ##Time series analysis (2)
 ######There is an obvious seasonal fluctuation in the time series graph. A reasonable explanation is weather. The apprehensions tend to decrease during the winter months.But the decreasing trend implied that the administration's early efforts to thwart the illegal aliens problems have an effect in the long run. 
 ```{r echo=FALSE}
-# Decompostion of additive time series
+# Decompostion of multiplicative time series
 timeseriescomponents <- decompose(ts3, type="multiplicative")
 
 #timeseriescomponents
@@ -287,7 +293,6 @@ fit <- arima(ts3, order=c(1,0,0), list(order=c(2,1,0), period=12))
 fore <- predict(fit, n.ahead=24)
 
 #  error bounds at 95% confidence level
-
 U <- fore$pred + 2*fore$se
 L <- fore$pred - 2*fore$se
 ts.plot(ts3, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2))
