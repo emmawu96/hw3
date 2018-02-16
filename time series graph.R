@@ -11,10 +11,12 @@ ts2
 # change ts2 to class "ts" 
 ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 
-#create data for calculating the annual means
-ts3.1<-as.vector(ts3)
 
-ts4 <- ts.plot(ts3, main="Time Series from 2010 to 2017", gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+#Plot the time Series Graph
+ts4 <- ts.plot(ts3,main="Time Series from 2010 to 2017", gpars=list(xlab="year", ylab="Apprehensions", lty=c(1:3)))
+
+#create data for calculating the annual means and draw the means line
+ts3.1<-as.vector(ts3)
 for (i in 1:18 ){
   if (i == 1){
     from <- i

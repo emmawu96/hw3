@@ -4,7 +4,7 @@ author: "Yin-Chia Huang, Francesco Re, Emma Yue Wu (Group 6)"
 date: "2/11/2018"
 subtitle: "MA415 Spring 2018, Assignment 3"
 runtime: shiny
-output: html_document
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
