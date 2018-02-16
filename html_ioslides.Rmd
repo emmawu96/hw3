@@ -233,6 +233,7 @@ ts3 <- ts(as.vector(unlist(t(ts2))),frequency=12,start=c(2000,1))
 
 ## calculate the annaul means 
 ts3.1 <- as.vector(unlist(t(ts2)))
+
 for (i in 1:18){
   if (i == 1){
     from <- i
@@ -309,7 +310,7 @@ fore <- predict(fit, n.ahead=24)
 #  error bounds at 95% confidence level
 U <- fore$pred + 2*fore$se
 L <- fore$pred - 2*fore$se
-ts.plot(ts3, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2))
+ts.plot(ts3, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2), main="Future Apprenhensions Prediction")
 legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=c(1,2,4), lty=c(1,1,2))
 
 ```
